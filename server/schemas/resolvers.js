@@ -5,25 +5,15 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    users: async () => {
-        return User.find().populate('books');
+    user: async (parent, args, context) => {
+        if(context.user){
+          const userData = await User.findOne({ _id: context.user._id});
+
+          return userData;
+        }
+        throw new AuthenticationError('NotLogged In')
       },
-
-    user: async (parent, { username }) => {
-        return User.findOne({ username }).populate('books');
-      },
-
-    books: async (parent, { username }) => {
-        const params = username ? { username } : {};
-        return Book.find(params).sort({ createdAt: -1 });
-      },
-
-    book: async (parent, { bookId }) => {
-        return Book.findOne({ _id: bookId });
-      },
-    },
-
-
+  },
 Mutation: {
 
    addUser: async (parent, { username, email, password }) => {
@@ -51,40 +41,32 @@ Mutation: {
       },
 
 //taken from activity 26 dont know how to write it 
-      saveBook: async (parent, { bookId }, context) => {
+      saveBook: async (parent, { bookData }, context) => {
         if (context.user) {
-          const book = await Book.create({
-            bookText,
-            bookAuthor: context.user.username,
-          });
-  
-          await User.findOneAndUpdate(
-            { _id: context.user._id },
-            { $addToSet: { books: book._id } }
+          const userUpdate = await User.findOneAndUpdate(
+           {_id: context.user._id},
+           { $push: { savedBooks: bookData} },
+           {new: true}
           );
   
-          return book;
+          return userUpdate;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
 
       removeBook: async (parent, { bookId }, context) => {
         if (context.user) {
-          const thought = await Thought.findOneAndDelete({
-            _id: bookId,
-            thoughtAuthor: context.user.username,
-          });
-  
-          await User.findOneAndUpdate(
-            { _id: context.user._id },
-            { $pull: { thoughts: book._id } }
-          );
-  
-          return book;
+          const userUpdate = await User.findOneAndUpdate(
+            {_id: context.user._id},
+            { $pull: { savedBooks: bookId} },
+            {new: true}
+           );
+   
+           return userUpdate;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
-  },
-};
+  }
+}
 
 module.exports = resolvers;
