@@ -1,6 +1,7 @@
 //activity 21
 import { gql } from '@apollo/client';
 
+//same as 21
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -24,8 +25,8 @@ export const ADD_USER = gql`
     }
   }
 `;
-
-export const ADD_THOUGHT = gql`
+//need to be altered
+export const SAVE_BOOK = gql`
   mutation addThought($thoughtText: String!) {
     addThought(thoughtText: $thoughtText) {
       _id
@@ -40,7 +41,7 @@ export const ADD_THOUGHT = gql`
   }
 `;
 
-export const ADD_COMMENT = gql`
+export const REMOVE_BOOK = gql`
   mutation addComment($thoughtId: ID!, $commentText: String!) {
     addComment(thoughtId: $thoughtId, commentText: $commentText) {
       _id
