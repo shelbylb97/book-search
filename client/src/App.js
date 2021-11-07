@@ -42,23 +42,21 @@ function App() {
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
           <div className="container">
-            <Route exact path="/" component={SearchBooks}>
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
+            <Route exact path="/" component={SearchBooks}/>
+          
+            {/* <Route exact path="/login">
+              <Login /> */}
+            {/* </Route>
             <Route exact path="/signup">
               <Signup />
             </Route>
             <Route exact path="/me">
-              <Profile />
-            <Route exact path="/saved" component={SavedBooks} >
+              <Profile /> */}
+            <Route exact path="/saved" component={SavedBooks} />
               <SavedBooks />
               </div>
           </div>
           <Footer />
-        </div>
       </Router>
     </ApolloProvider>
   )};
@@ -81,8 +79,8 @@ function App() {
 //       <>
 //         <Navbar />
 //         <Switch>
-          <Route exact path='/' component={SearchBooks} />
-          <Route exact path='/saved' component={SavedBooks} />
+          // <Route exact path='/' component={SearchBooks} />
+          // <Route exact path='/saved' component={SavedBooks} />
 //           <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
 //         </Switch>
 //       </>
