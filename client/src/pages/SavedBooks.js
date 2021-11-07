@@ -16,28 +16,28 @@ const SavedBooks = () => {
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+    if (!token) {
+      return false;
+    }
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        if (!token) {
-          return false;
-        }
+  
+    try {
+      const {data} = await deleteBook({
+      variables: { bookId }
+    });
+    console.log(data)
+    // removed from local 
+    removeBookId(bookId);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-        const response = await getMe(token);
-
-        if (!response.ok) {
-          throw new Error('something went wrong!');
-        }
-
-        const user = await response.json();
-        setUserData(user);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+// if no data yet, output
+if (loading) {
+  return <h2>LOADING...</h2>;
+}
 
     getUserData();
   }, [userDataLength]);
