@@ -25,7 +25,7 @@ export const ADD_USER = gql`
     }
   }
 `;
-//need to be altered
+
 export const SAVE_BOOK = gql`
   mutation saveBook($input: BookInput!) {
     saveBook(input: $input) {
