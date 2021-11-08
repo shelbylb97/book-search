@@ -19,6 +19,6 @@
     "@apollo/client": "^3.4.16",
     "apollo-server-express": "^3.4.0",
     "express": "^4.17.1",
-    "yarn": "^1.22.17"
+    "graphql": "^15.7.2"
   }
 }
