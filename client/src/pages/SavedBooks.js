@@ -5,12 +5,15 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 import { DELETE_BOOK } from '../utils/mutations';
 import { removeBookId } from '../utils/localStorage';
+import Auth from '../utils/auth';
 
 const SavedBooks = () => {
-  const { loading, data} = useQuery(GET_ME);
-  const [deleteBook] = useMutation(DELETE_BOOK);
-  const userData = data?.me;
-  console.log(userData)
+  const [userData, setUserData] = useState({});
+  const userDataLength = Object.keys(userData).length;
+
+  const [deleteBook] = useMutation(DELETE_BOOK)
+
+  const { loading, data } = useQuery(GET_ME);
 
 
   const handleDeleteBook = async (bookId) => {
