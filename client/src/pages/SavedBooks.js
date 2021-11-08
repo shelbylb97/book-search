@@ -39,6 +39,9 @@ const SavedBooks = () => {
 
   // if data isn't here yet, say so
   if (!userDataLength) {
+    if (!loading) {
+      setUserData(data.me);
+    }
     return <h2>LOADING...</h2>;
   }
 
